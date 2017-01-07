@@ -40,7 +40,7 @@ public class Tron extends JFrame implements KeyListener {
 	public Tron() {
 		direction2 = UP;
 		direction = UP;
-		String buttons[] = { "Hard", "Medium", "Easy" }; // 2=easy 1=medium
+		String buttons[] = { "Hard", "Normal", "Easy" }; // 2=easy 1=medium
 															// 0=hard
 
 		difficulty = JOptionPane.showOptionDialog(null, "Difficulty", "Difficulty setting", JOptionPane.NO_OPTION,
@@ -69,17 +69,16 @@ public class Tron extends JFrame implements KeyListener {
 				bluePanel.add(array[i][j]);
 			}
 		}
-		
-		addWindowListener(new WindowAdapter()
-		{ public void windowClosing(WindowEvent e)
-			{ 
+
+		addWindowListener(new WindowAdapter() {
+			public void windowClosing(WindowEvent e) {
 				System.exit(0);
 			}
 		});
 		addKeyListener(this);
-		bluePanel.setBackground(Color.BLACK);
+		bluePanel.setBackground(Color.GRAY);
 		add(bluePanel);
-		setSize(new Dimension(675, 685));
+		setSize(new Dimension(665, 685));
 		setVisible(true);
 
 		snakePosition();
@@ -113,43 +112,7 @@ public class Tron extends JFrame implements KeyListener {
 			} catch (InterruptedException ie) {
 				ie.printStackTrace();
 			}
-
-			if (direction == UP) {
-				x--;
-			}
-			else if (direction == DOWN) {
-				x++;
-			}
-			else if (direction == RIGHT) {
-				y++;
-			}
-			else if (direction == LEFT) {
-				y--;
-			}
-
-			if (x == -1 || x >= 32 || y == -1 || y >= 32) {
-				JOptionPane.showMessageDialog(null, "GAME OVER");
-				input("Would you like to Play again or Exit?", "Play again", "Exit");
-				break;
-
-			}
-
-			if (array[x][y].getBackground().equals(Color.ORANGE)) {
-				array[x][y].setBackground(Color.RED);
-				JOptionPane.showMessageDialog(null, "GAME OVER");
-				input("Would you like to Play again or Exit?", "Play again", "Exit");
-				break;
-			}
-
-			if (array[x][y].getBackground().equals(Color.CYAN)) {
-				array[x][y].setBackground(Color.RED);
-				JOptionPane.showMessageDialog(null, "GAME OVER");
-				input("Would you like to Play again or Exit?", "Play again", "Exit");
-				break;
-			}
-
-			array[x][y].setBackground(Color.ORANGE);
-
+			
 			if (direction2 == UP) {
 				x2--;
 			} else if (direction2 == DOWN) {
@@ -159,6 +122,7 @@ public class Tron extends JFrame implements KeyListener {
 			} else if (direction2 == LEFT) {
 				y2--;
 			}
+
 			/////////////
 			if (Math.pow(x2 - x, 2) > Math.pow(y2 - y, 2)) {
 				if (x2 > x) {
@@ -210,42 +174,95 @@ public class Tron extends JFrame implements KeyListener {
 
 			if (x2 == -1 || x2 >= 32 || y2 == -1 || y2 >= 32) {
 				JOptionPane.showMessageDialog(null, "You won!");
-				input("Would you like to Play again or Exit?", "Play again", "Exit");
-				if (retry == 2) {
+				retry = input("Would you like to Play again or Exit?", "Play again", "Exit");
+				if (retry == 1) {
+					System.exit(0);
+				}
+				else {
 					break;
 				}
 			}
 
 			if (array[x2][y2].getBackground().equals(Color.ORANGE)) {
+				array[x2][y2].setBackground(Color.RED);
 				JOptionPane.showMessageDialog(null, "You won!");
-				input("Would you like to Play again or Exit?", "Play again", "Exit");
-				if (retry == 2) {
+				retry = input("Would you like to Play again or Exit?", "Play again", "Exit");
+				if (retry == 1) {
+					System.exit(0);
+				}
+				else {
 					break;
 				}
 			}
 
 			if (array[x2][y2].getBackground().equals(Color.CYAN)) {
+				array[x2][y2].setBackground(Color.RED);
 				JOptionPane.showMessageDialog(null, "You won!");
 				retry = input("Would you like to Play again or Exit?", "Play again", "Exit");
-				if (retry == 2) {
+				if (retry == 1) {
+					System.exit(0);
+				}
+				else {
 					break;
 				}
+			}
+			array[x2][y2].setBackground(Color.CYAN);
+			
+			
+			if (direction == UP) {
+				x--;
+			} else if (direction == DOWN) {
+				x++;
+			} else if (direction == RIGHT) {
+				y++;
+			} else if (direction == LEFT) {
+				y--;
 			}
 
 			if (x == -1 || x >= 32 || y == -1 || y >= 32) {
-				JOptionPane.showMessageDialog(null, "You won!");
-				input("Would you like to Play again or Exit?", "Play again", "Exit");
-				if (retry == 2) {
+				JOptionPane.showMessageDialog(null, "You lose");
+				retry = input("Would you like to Play again or Exit?", "Play again", "Exit");
+				if (retry == 1) {
+					System.exit(0);
+				}
+				else {
 					break;
 				}
-
 			}
 
-			array[x2][y2].setBackground(Color.CYAN);
+			if (array[x][y].getBackground().equals(Color.ORANGE)) {
+				array[x][y].setBackground(Color.RED);
+				JOptionPane.showMessageDialog(null, "You lose");
+				retry = input("Would you like to Play again or Exit?", "Play again", "Exit");
+				if (retry == 1) {
+					System.exit(0);
+				}
+				else {
+					break;
+				}
+			}
+
+			if (array[x][y].getBackground().equals(Color.CYAN)) {
+				array[x][y].setBackground(Color.RED);
+				JOptionPane.showMessageDialog(null, "You lose");
+				retry = input("Would you like to Play again or Exit?", "Play again", "Exit");
+				if (retry == 1) {
+					System.exit(0);
+				}
+				else {
+					break;
+				}
+			}
+
+			array[x][y].setBackground(Color.ORANGE);
 		}
+		
+		dispose();
 	}
 
 	public static void main(String[] args) {
-		new Tron();
+		while (true) {
+			new Tron();
+		}
 	}
 }
