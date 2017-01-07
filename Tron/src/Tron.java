@@ -2,6 +2,8 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.util.Random;
 
 import javax.swing.JFrame;
@@ -67,7 +69,13 @@ public class Tron extends JFrame implements KeyListener {
 				bluePanel.add(array[i][j]);
 			}
 		}
-
+		
+		addWindowListener(new WindowAdapter()
+		{ public void windowClosing(WindowEvent e)
+			{ 
+				System.exit(0);
+			}
+		});
 		addKeyListener(this);
 		bluePanel.setBackground(Color.BLACK);
 		add(bluePanel);
@@ -109,13 +117,13 @@ public class Tron extends JFrame implements KeyListener {
 			if (direction == UP) {
 				x--;
 			}
-			if (direction == DOWN) {
+			else if (direction == DOWN) {
 				x++;
 			}
-			if (direction == RIGHT) {
+			else if (direction == RIGHT) {
 				y++;
 			}
-			if (direction == LEFT) {
+			else if (direction == LEFT) {
 				y--;
 			}
 
